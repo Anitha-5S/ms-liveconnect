@@ -1,0 +1,7 @@
+rootProject.name = 'ms-liveconnect'
+include 'ms-lib'
+include 'ms-security'
+include 'ms-customer'
+include 'ms-master'
+include 'ms-lc-user'
+

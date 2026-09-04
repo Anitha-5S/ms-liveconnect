@@ -1,0 +1,78 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+group 'com.c2.lc.ms'
+version '1.0-SNAPSHOT'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.hibernate:hibernate-core:5.6.8.Final'
+    }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.25'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.kafka:spring-kafka'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
+    implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.1.5.RELEASE'
+
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.5.5'
+
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile group: 'com.google.zxing', name: 'core', version: '3.4.0'
+    compile group: 'com.google.zxing', name: 'javase', version: '3.4.0'
+    compile group: 'p6spy', name: 'p6spy', version: '3.7.0'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation 'com.microsoft.azure:azure-storage:8.6.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.2.1.RELEASE'
+    compile 'commons-net:commons-net:3.3'
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.25'
+
+    compile files('libs/jconn4.jar')
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.2.1'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.1'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+    implementation 'org.hibernate:hibernate-core:5.6.8.Final'
+
+}
+
+// ms-lib dependencies
+dependencies {
+    //implementation files('../ms-lib/build/libs/ms-lib-1.0.0.jar')
+    implementation project(":ms-lib")
+}
+
+test {
+    useJUnitPlatform()
+}

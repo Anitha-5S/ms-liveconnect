@@ -1,0 +1,58 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+
+group 'com.c2.lc.ms'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.microsoft.azure:azure-storage:8.6.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'commons-codec:commons-codec:1.12'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile group: 'com.google.zxing', name: 'core', version: '3.4.0'
+    compile group: 'com.google.zxing', name: 'javase', version: '3.4.0'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'mysql:mysql-connector-java:8.0.25'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compile group: 'p6spy', name: 'p6spy', version: '3.7.0'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'io.projectreactor:reactor-test'
+    //implementation 'io.projectreactor:reactor-core:3.4.16'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    implementation 'com.azure:azure-messaging-eventhubs:5.10.1'
+}
+
+// ms-lib dependencies
+dependencies {
+    implementation files('../ms-lib/build/libs/ms-lib-1.0.0.jar')
+    //implementation project(":ms-lib")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    enabled = true
+}

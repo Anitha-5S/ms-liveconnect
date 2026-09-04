@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: #{NAMESPACE}#
+  name: ingress-with-auth
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-url: "http://ms-security-service.#{NAMESPACE}#.svc.cluster.local:1860/c2/lc/ms/auth/validate"
+    nginx.ingress.kubernetes.io/auth-response-headers: x-csquare-user-id, x-csquare-c2-code, x-csquare-br-code, x-csquare-terminal-id, x-csquare-type
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-csquare-api-key, X-csquare-api-token, Content-Type"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 5m
+    nginx.ingress.kubernetes.io/server-snippet: |
+      server_tokens off;
+      more_clear_headers Server;
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /(c2/lc/ms/mst/.*)
+            backend:
+              serviceName: ms-master-service
+              servicePort:   2260
+          - path: /(c2/lc/ms/firm/.*)
+            backend:
+              serviceName: ms-customers-service
+              servicePort: 1960
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ms-lc-auth
+  namespace: #{NAMESPACE}#
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 5m
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /(c2/lc/ms/auth/.*)
+            backend:
+              serviceName: ms-security-service
+              servicePort:   1860
+          - path: /(c2/lc/ms/otp/.*)
+            backend:
+              serviceName: ms-security-service
+              servicePort:   1860

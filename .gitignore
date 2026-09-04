@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Java
+*.class
+
+# Logs
+*.log
+
+# Environment files
+.env
+*.env
+
+# Local configuration
+application-local.properties
+application-local.yml
+
+# Credentials
+**/*credentials*
+**/*secret*
